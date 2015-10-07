@@ -1,8 +1,12 @@
 
 local shadows = {}
 
-minetest.register_entity("shadow:shadow", {
+minetest.register_entity("player_shadow:shadow", {
 	automatic_rotate = false,
+	collision_box = {
+		0.0, 0.0, 0.0,
+		0.0, 0.0, 0.0
+	},
 	makes_footstep_sound = false,
 	physical = false,
 	textures = {
@@ -16,15 +20,14 @@ minetest.register_entity("shadow:shadow", {
 })
 
 minetest.register_on_joinplayer(function(player)
-	local surrounding_objects = minetest.get_objects_inside_radius(player:getpos(), 0.5)
+	local surrounding_objects = minetest.get_objects_inside_radius(player:getpos(), 14.5)
 	
 	for index, object in ipairs(surrounding_objects) do
-		if object.name == "shadow:shadow" then
-			object:remove()
-		end
+		print("remove")
+		object:remove()
 	end
 	
-	local shadow = minetest.add_entity(player:getpos(), "shadow:shadow")
+	local shadow = minetest.add_entity(player:getpos(), "player_shadow:shadow")
 	
 	shadows[player:get_player_name()] = shadow
 	
